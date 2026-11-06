@@ -26,6 +26,8 @@ public class Program
 
         app.UseHttpsRedirection();
 
+        app.UseStaticFiles();
+
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
@@ -33,6 +35,8 @@ public class Program
         }
 
         app.MapTaskApi();
+
+        app.MapFallbackToFile("index.html");
 
         app.Run();
     }
