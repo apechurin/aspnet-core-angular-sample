@@ -1,0 +1,13 @@
+@if (alerts$ | async; as alerts) {
+  @for (alert of alerts; track alert.id) {
+    <div class="alert alert-danger alert-dismissible m-2" role="alert">
+      {{ alert.message || "Unknown error" }}
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="onCloseButtonClicked(alert)"
+      ></button>
+    </div>
+  }
+}

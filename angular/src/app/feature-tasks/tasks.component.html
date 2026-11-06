@@ -1,0 +1,81 @@
+<app-busy-indicator [busy]="busy()"></app-busy-indicator>
+<app-alert></app-alert>
+
+<div class="table-container table-responsive p-4">
+  <div class="d-flex gap-2 flex-column flex-md-row">
+    <div class="dropdown">
+      <button
+        class="btn btn-secondary dropdown-toggle"
+        type="button"
+        id="completedFilterDropdownMenuButton"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        {{ viewModel.selectedCompletedFilterItem().name }}
+      </button>
+      <ul
+        class="dropdown-menu"
+        aria-labelledby="completedFilterDropdownMenuButton"
+      >
+        @for (item of viewModel.completedFilterItems; track item.value) {
+          <li>
+            <button
+              class="dropdown-item"
+              type="button"
+              (click)="onCompletedFilterItemClicked(item)"
+            >
+              {{ item.name }}
+            </button>
+          </li>
+        }
+      </ul>
+    </div>
+    <div class="flex-grow-1"></div>
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="onCreateButtonClicked()"
+    >
+      Создать
+    </button>
+    <button
+      type="button"
+      class="btn btn-secondary"
+      [disabled]="!selectedTask() || selectedTask()!.isCompleted"
+      (click)="onCompleteButtonClicked()"
+    >
+      Отметить выполненной
+    </button>
+    <button
+      type="button"
+      class="btn btn-danger"
+      [disabled]="!selectedTask()"
+      (click)="onDeleteButtonClicked()"
+    >
+      Удалить
+    </button>
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Название</th>
+        <th scope="col">Создана</th>
+        <th scope="col">Статус выполнения</th>
+      </tr>
+    </thead>
+    <tbody>
+      @if (tasks$ | async; as tasks) {
+        @for (task of tasks; track task.id) {
+          <tr
+            [class.table-active]="selectedTask() === task"
+            (click)="onTaskRowClicked(task)"
+          >
+            <td>{{ task.title }}</td>
+            <td>{{ task.createdAt | date: "short" }}</td>
+            <td>{{ task.isCompleted ? "Выполнена" : "Не выполнена" }}</td>
+          </tr>
+        } @empty {}
+      }
+    </tbody>
+  </table>
+</div>
