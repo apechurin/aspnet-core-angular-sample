@@ -17,5 +17,6 @@ dotnet publish -c Release --self-contained -r ${RID}
 cp -r bin/Release/${TargetFramework}/${RID}/publish/* publish
 
 rm -rf publish/appsettings*.json
+cp appsettings.json.example publish
 
 find publish -name ".gitkeep" -type f -delete
