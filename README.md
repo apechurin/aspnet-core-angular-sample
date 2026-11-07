@@ -1,4 +1,4 @@
-# Sample ASP.NET Core + Angular
+# Sample ASP.NET Core + Angular project
 
 ## Требования
 
